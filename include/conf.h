@@ -19,5 +19,6 @@
 #define _MYSQL_DATABASE "furniture_restoration"
 #define _MYSQL_CHARSET "utf8mb4"
 #define _MYSQL_WRONG_PWD 1698
+#define NULL_STRING_DB "NULL"
 
 #endif

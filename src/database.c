@@ -71,8 +71,9 @@ String* database_getUser() {
 void database_debugPrintErr() {
 #if DEBUG
     printf(COLOR_RED);
-    fprintf(stderr, "%u\n", mysql_errno(&_database.mysql));
-    fprintf(stderr, "%s\n", mysql_error(&_database.mysql));
+    fprintf(stderr, COLOR_RED "Error code : %u\n", mysql_errno(&_database.mysql));
+    fprintf(stderr, COLOR_RED "SQLSTATE: %s\n", mysql_sqlstate(_database.connexion));
+    fprintf(stderr, COLOR_RED "Message : %s\n" COLOR_RESET, mysql_error(&_database.mysql));
     printf(COLOR_RESET);
 #endif
 }
@@ -83,9 +84,27 @@ void database_displayCurrentUser() {
     printf("\n");
 
     printf("*** Connecté(e) en tant que : %s ***\n", database_getUser()->value);
-    
+
     printf("******************************");
     helper_printNChar('*', database_getUser()->length + 4);
     printf("\n");
     printf(COLOR_RESET);
+}
+
+MYSQL* database_getConnexion() {
+    return _database.connexion;
+}
+
+void database_closeConnexion() {
+    if (_database.connexion != NULL) {
+        mysql_close(_database.connexion);
+        _database.connexion = NULL;
+    }
+}
+
+void database_freeResult(MYSQL_RES* results) {
+    if (results != NULL) {
+        mysql_free_result(results);
+        results = NULL;
+    }
 }

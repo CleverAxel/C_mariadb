@@ -26,6 +26,9 @@ void database_connect();
 String* database_getUser();
 void database_debugPrintErr();
 void database_displayCurrentUser();
+MYSQL* database_getConnexion();
+void database_closeConnexion();
+void database_freeResult(MYSQL_RES* results);
 
 
 #endif
