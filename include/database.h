@@ -25,6 +25,7 @@ void database_init();
 void database_connect();
 String* database_getUser();
 void database_debugPrintErr();
+void database_displayCurrentUser();
 
 
 #endif

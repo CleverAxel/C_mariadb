@@ -16,17 +16,17 @@ void database_connect() {
     bool successfullConnection = false;
     do {
         helper_clearConsole();
-        printf(COLOR_BLU "***Connexion à la base de données***\n");
+        printf("**************************************\n");
+        printf("*** Connexion à la base de données ***\n");
+        printf("**************************************\n");
         string_free(username);
         string_free(password);
 
-        printf(COLOR_BLU "\tEntrez votre nom d'utilisateur : " COLOR_GRN);
-        // fflush(stdout);
+        printf("Entrez votre nom d'utilisateur : ");
         username = string_readLine();
         string_manageFailedMalloc(username);
 
-        printf(COLOR_BLU "\tEntrez votre mot de passe : " COLOR_GRN);
-        // fflush(stdout);
+        printf("Entrez votre mot de passe : ");
         password = string_readLine();
         string_manageFailedMalloc(password);
 
@@ -42,13 +42,8 @@ void database_connect() {
 
         if (_database.connexion == NULL) {
             helper_clearConsole();
-            printf(COLOR_RED "Impossible de se connecter au serveur D:\n");
-            const unsigned int errNb = mysql_errno(&_database.mysql);
-            if (errNb == _MYSQL_WRONG_PWD) {
-                printf("Mot de passe ou nom d'utilisateur incorrect\n");
-            }
+            printf(COLOR_RED "Impossible de se connecter au serveur\n");
             database_debugPrintErr();
-
             shouldContinue = helper_confirm(COLOR_GRN "Réessayer de se connecter ?" COLOR_RESET);
         } else {
             shouldContinue = false;
@@ -60,9 +55,10 @@ void database_connect() {
     if (successfullConnection) {
         helper_clearConsole();
         printf(COLOR_GRN "Connection à la base de donnée réussie.\n");
-        helper_pauseConsole();
         string_free(password);
         _database.user = username;
+        database_displayCurrentUser();
+        helper_pauseConsole();
     } else {
         exit(EXIT_FAILURE);
     }
@@ -79,4 +75,17 @@ void database_debugPrintErr() {
     fprintf(stderr, "%s\n", mysql_error(&_database.mysql));
     printf(COLOR_RESET);
 #endif
+}
+
+void database_displayCurrentUser() {
+    printf(COLOR_YEL "******************************");
+    helper_printNChar('*', database_getUser()->length + 4);
+    printf("\n");
+
+    printf("*** Connecté(e) en tant que : %s ***\n", database_getUser()->value);
+    
+    printf("******************************");
+    helper_printNChar('*', database_getUser()->length + 4);
+    printf("\n");
+    printf(COLOR_RESET);
 }

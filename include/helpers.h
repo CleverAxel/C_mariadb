@@ -7,4 +7,5 @@
 bool helper_confirm(const char *prompt);
 void helper_clearConsole();
 void helper_pauseConsole();
+void helper_printNChar(char c, unsigned int count);
 #endif

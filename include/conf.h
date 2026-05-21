@@ -16,7 +16,7 @@
 
 #define _MYSQL_SERVER "localhost"
 #define _MYSQL_PORT 3306
-#define _MYSQL_DATABASE "furniture"
+#define _MYSQL_DATABASE "furniture_restoration"
 #define _MYSQL_CHARSET "utf8mb4"
 #define _MYSQL_WRONG_PWD 1698
 

@@ -1,5 +1,12 @@
 #include "helpers.h"
 #include "conf.h"
+
+void helper_printNChar(char c, unsigned int count) {
+    while(count--) {
+        printf("%c", c);
+    }
+}
+
 bool helper_confirm(const char* prompt) {
     int c;
 
