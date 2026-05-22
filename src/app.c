@@ -11,12 +11,13 @@
 #include "furniture.h"
 #include "estimation.h"
 #include "worksite.h"
-// J'ai possiblement pété un plomb
+#include "operation.h"
+#include "operation_supply.h"
 
 
 void app_run() {
     while (true) {
-        MenuChoice menuChoice = (MenuChoice)app_displayMenu();
+        MenuChoice menuChoice = app_displayMenu();
 
         switch (menuChoice) {
         case MENU_CLIENTS:
@@ -35,10 +36,10 @@ void app_run() {
             handleWorksites();
             break;
         case MENU_OPERATIONS:
-            app_handleOperations();
+            handleOperations();
             break;
         case MENU_OPERATIONS_SUPPLIES:
-            app_handleOperationsSupplies();
+            handleOperationSupplies();
             break;
         case MENU_SUPPLIES:
             handleSupplies();
@@ -49,14 +50,6 @@ void app_run() {
     }
 }
 
-
-
-
-void app_handleOperations() {
-}
-
-void app_handleOperationsSupplies() {
-}
 
 int app_displayMenu() {
     bool isAValidChoice = false;

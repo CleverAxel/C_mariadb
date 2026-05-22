@@ -23,6 +23,4 @@ int app_displayMenu();
 
 
 
-void app_handleOperations();
-void app_handleOperationsSupplies();
 #endif
