@@ -7,5 +7,6 @@ int main() {
     database_init();
     database_connect();
     app_run();
+    database_closeConnexion();
     return 0;
 }

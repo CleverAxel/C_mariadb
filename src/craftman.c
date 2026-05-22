@@ -7,7 +7,7 @@ int displayCraftmanMenu() {
     printf("************************************\n");
     printf("***          Artisans            ***\n");
     printf("************************************\n");
-    printf("1. Chercher artisan par nom\n");
+    printf("1. Sélect artisans\n");
     printf("2. Insérer un nouvel artisan\n");
     printf("0. Retour\n");
     printf("************************************\n");
@@ -40,7 +40,6 @@ void handleCraftmanSearch() {
     char* query =
     "SELECT registration_number AS matricule, lastname AS nom, firstname AS prénom, speciality AS spécialité FROM craftmans";
     database_displaySelect(query);
-    
 }
 
 void handleCraftmanInsert() {

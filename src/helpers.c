@@ -2,7 +2,7 @@
 #include "conf.h"
 
 void helper_printNChar(char c, unsigned int count) {
-    while(count--) {
+    while (count--) {
         printf("%c", c);
     }
 }

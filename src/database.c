@@ -118,7 +118,6 @@ void database_displaySelect(const char* query) {
     string_manageFailedMalloc(nullChaineDb);
 
 
-
     MYSQL_RES* results = NULL;
     MYSQL_ROW row;
     MYSQL_FIELD* columnNames = NULL;

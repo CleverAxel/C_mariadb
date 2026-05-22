@@ -9,9 +9,9 @@ int displayFurnitureMenu() {
     printf("************************************\n");
     printf("***         Furnitures           ***\n");
     printf("************************************\n");
-    printf("1. Rechercher meubles\n");
-    printf("2. Inserer un meuble\n");
-    printf("3. Mettre a jour le status\n");
+    printf("1. Sélect meubles\n");
+    printf("2. Insérer un meuble\n");
+    printf("3. Mettre à jour le status\n");
     printf("0. Retour\n");
     printf("************************************\n");
     printf("Choisissez une option : ");

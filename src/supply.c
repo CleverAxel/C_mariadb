@@ -10,7 +10,7 @@ int displaySupplyMenu() {
     printf("************************************\n");
     printf("***          Fourniture          ***\n");
     printf("************************************\n");
-    printf("1. Rechercher fournitures\n");
+    printf("1. Sélect fournitures\n");
     printf("2. Insérer une fourniture\n");
     printf("0. Retour\n");
     printf("************************************\n");
@@ -67,25 +67,25 @@ void handleSupplyInsert() {
     string_manageFailedMalloc(label);
 
     printf("Stock            : ");
-    String* stock_quantity = string_readLine();
-    string_manageFailedMalloc(stock_quantity);
+    String* stockyQuantity = string_readLine();
+    string_manageFailedMalloc(stockyQuantity);
 
     printf("Seuil minimum    : ");
-    String* minimum_threshold = string_readLine();
-    string_manageFailedMalloc(minimum_threshold);
+    String* minThrehold = string_readLine();
+    string_manageFailedMalloc(minThrehold);
 
     printf("Coût unitaire    : ");
-    String* unit_cost = string_readLine();
-    string_manageFailedMalloc(unit_cost);
+    String* unitCost = string_readLine();
+    string_manageFailedMalloc(unitCost);
 
     printf("Statut (available/out_of_stock/discontinued) : ");
     String* status = string_readLine();
     string_manageFailedMalloc(status);
 
     const char* query =
-        "INSERT INTO supplies "
-        "(label, stock_quantity, minimum_threshold, unit_cost, status) "
-        "VALUES (?, ?, ?, ?, ?)";
+    "INSERT INTO supplies "
+    "(label, stock_quantity, minimum_threshold, unit_cost, status) "
+    "VALUES (?, ?, ?, ?, ?)";
 
     MYSQL_STMT* stmt = mysql_stmt_init(database_getConnexion());
 
@@ -93,9 +93,9 @@ void handleSupplyInsert() {
         database_debugPrintErr();
 
         string_free(label);
-        string_free(stock_quantity);
-        string_free(minimum_threshold);
-        string_free(unit_cost);
+        string_free(stockyQuantity);
+        string_free(minThrehold);
+        string_free(unitCost);
         string_free(status);
 
         helper_pauseConsole();
@@ -109,9 +109,9 @@ void handleSupplyInsert() {
         mysql_stmt_close(stmt);
 
         string_free(label);
-        string_free(stock_quantity);
-        string_free(minimum_threshold);
-        string_free(unit_cost);
+        string_free(stockyQuantity);
+        string_free(minThrehold);
+        string_free(unitCost);
         string_free(status);
 
         helper_pauseConsole();
@@ -123,36 +123,36 @@ void handleSupplyInsert() {
 
     memset(bind, 0, sizeof(bind));
 
-    unsigned long label_len             = (unsigned long)label->byteLength;
-    unsigned long stock_quantity_len    = (unsigned long)stock_quantity->byteLength;
-    unsigned long minimum_threshold_len = (unsigned long)minimum_threshold->byteLength;
-    unsigned long unit_cost_len         = (unsigned long)unit_cost->byteLength;
-    unsigned long status_len            = (unsigned long)status->byteLength;
+    unsigned long labelLen = (unsigned long)label->byteLength;
+    unsigned long stockQuantityLen = (unsigned long)stockyQuantity->byteLength;
+    unsigned long minThreholdLen = (unsigned long)minThrehold->byteLength;
+    unsigned long unitCostLen = (unsigned long)unitCost->byteLength;
+    unsigned long statusLen = (unsigned long)status->byteLength;
 
-    bind[0].buffer_type   = MYSQL_TYPE_STRING;
-    bind[0].buffer        = label->value;
-    bind[0].buffer_length = label_len;
-    bind[0].length        = &label_len;
+    bind[0].buffer_type = MYSQL_TYPE_STRING;
+    bind[0].buffer = label->value;
+    bind[0].buffer_length = labelLen;
+    bind[0].length = &labelLen;
 
-    bind[1].buffer_type   = MYSQL_TYPE_STRING;
-    bind[1].buffer        = stock_quantity->value;
-    bind[1].buffer_length = stock_quantity_len;
-    bind[1].length        = &stock_quantity_len;
+    bind[1].buffer_type = MYSQL_TYPE_STRING;
+    bind[1].buffer = stockyQuantity->value;
+    bind[1].buffer_length = stockQuantityLen;
+    bind[1].length = &stockQuantityLen;
 
-    bind[2].buffer_type   = MYSQL_TYPE_STRING;
-    bind[2].buffer        = minimum_threshold->value;
-    bind[2].buffer_length = minimum_threshold_len;
-    bind[2].length        = &minimum_threshold_len;
+    bind[2].buffer_type = MYSQL_TYPE_STRING;
+    bind[2].buffer = minThrehold->value;
+    bind[2].buffer_length = minThreholdLen;
+    bind[2].length = &minThreholdLen;
 
-    bind[3].buffer_type   = MYSQL_TYPE_STRING;
-    bind[3].buffer        = unit_cost->value;
-    bind[3].buffer_length = unit_cost_len;
-    bind[3].length        = &unit_cost_len;
+    bind[3].buffer_type = MYSQL_TYPE_STRING;
+    bind[3].buffer = unitCost->value;
+    bind[3].buffer_length = unitCostLen;
+    bind[3].length = &unitCostLen;
 
-    bind[4].buffer_type   = MYSQL_TYPE_STRING;
-    bind[4].buffer        = status->value;
-    bind[4].buffer_length = status_len;
-    bind[4].length        = &status_len;
+    bind[4].buffer_type = MYSQL_TYPE_STRING;
+    bind[4].buffer = status->value;
+    bind[4].buffer_length = statusLen;
+    bind[4].length = &statusLen;
 
     if (mysql_stmt_bind_param(stmt, bind) != 0) {
         database_debugPrintErr();
@@ -160,9 +160,9 @@ void handleSupplyInsert() {
         mysql_stmt_close(stmt);
 
         string_free(label);
-        string_free(stock_quantity);
-        string_free(minimum_threshold);
-        string_free(unit_cost);
+        string_free(stockyQuantity);
+        string_free(minThrehold);
+        string_free(unitCost);
         string_free(status);
 
         helper_pauseConsole();
@@ -176,9 +176,9 @@ void handleSupplyInsert() {
         mysql_stmt_close(stmt);
 
         string_free(label);
-        string_free(stock_quantity);
-        string_free(minimum_threshold);
-        string_free(unit_cost);
+        string_free(stockyQuantity);
+        string_free(minThrehold);
+        string_free(unitCost);
         string_free(status);
 
         helper_pauseConsole();
@@ -191,9 +191,9 @@ void handleSupplyInsert() {
     mysql_stmt_close(stmt);
 
     string_free(label);
-    string_free(stock_quantity);
-    string_free(minimum_threshold);
-    string_free(unit_cost);
+    string_free(stockyQuantity);
+    string_free(minThrehold);
+    string_free(unitCost);
     string_free(status);
 
     helper_pauseConsole();

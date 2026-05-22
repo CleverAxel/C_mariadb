@@ -201,7 +201,6 @@ int string_getByteLength(const String* string) {
 }
 
 void string_manageFailedMalloc(const String* string) {
-    // yolo we stop the program and log it somewhere, somehow
     if (string == NULL) {
 #if DEBUG
         fprintf(stderr, "OKI, we couldn't allocate a string :(");

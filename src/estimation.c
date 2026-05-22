@@ -9,9 +9,9 @@ int displayEstimationMenu() {
     printf("************************************\n");
     printf("***         Estimations          ***\n");
     printf("************************************\n");
-    printf("1. Rechercher estimations\n");
-    printf("2. Inserer estimation\n");
-    printf("3. Mettre a jour le status\n");
+    printf("1. Sélect estimations\n");
+    printf("2. Insérer estimation\n");
+    printf("3. Mettre à jour le status\n");
     printf("0. Retour\n");
     printf("************************************\n");
     printf("Choisissez une option : ");
@@ -88,7 +88,7 @@ void handleEstimationInsert() {
     String* plannedAmount = string_readLine();
     string_manageFailedMalloc(plannedAmount);
 
-    printf("Date validite             : ");
+    printf("Date validité             : ");
     String* validityDeadline = string_readLine();
     string_manageFailedMalloc(validityDeadline);
 
@@ -138,42 +138,42 @@ void handleEstimationInsert() {
 
     memset(bind, 0, sizeof(bind));
 
-    unsigned long furniture_id_len = (unsigned long)furnitureId->byteLength;
-    unsigned long estimation_date_len = (unsigned long)estimationDate->byteLength;
-    unsigned long planned_work_description_len = (unsigned long)plannedWorkDescription->byteLength;
-    unsigned long planned_amount_len = (unsigned long)plannedAmount->byteLength;
-    unsigned long validity_deadline_len = (unsigned long)validityDeadline->byteLength;
-    unsigned long status_len = (unsigned long)status->byteLength;
+    unsigned long furnitureIdLen = (unsigned long)furnitureId->byteLength;
+    unsigned long estimationDateLen = (unsigned long)estimationDate->byteLength;
+    unsigned long plannedWorkDescLen = (unsigned long)plannedWorkDescription->byteLength;
+    unsigned long plannedAmountLen = (unsigned long)plannedAmount->byteLength;
+    unsigned long validityDeadLineLen = (unsigned long)validityDeadline->byteLength;
+    unsigned long statusLen = (unsigned long)status->byteLength;
 
     bind[0].buffer_type = MYSQL_TYPE_STRING;
     bind[0].buffer = furnitureId->value;
-    bind[0].buffer_length = furniture_id_len;
-    bind[0].length = &furniture_id_len;
+    bind[0].buffer_length = furnitureIdLen;
+    bind[0].length = &furnitureIdLen;
 
     bind[1].buffer_type = MYSQL_TYPE_STRING;
     bind[1].buffer = estimationDate->value;
-    bind[1].buffer_length = estimation_date_len;
-    bind[1].length = &estimation_date_len;
+    bind[1].buffer_length = estimationDateLen;
+    bind[1].length = &estimationDateLen;
 
     bind[2].buffer_type = MYSQL_TYPE_STRING;
     bind[2].buffer = plannedWorkDescription->value;
-    bind[2].buffer_length = planned_work_description_len;
-    bind[2].length = &planned_work_description_len;
+    bind[2].buffer_length = plannedWorkDescLen;
+    bind[2].length = &plannedWorkDescLen;
 
     bind[3].buffer_type = MYSQL_TYPE_STRING;
     bind[3].buffer = plannedAmount->value;
-    bind[3].buffer_length = planned_amount_len;
-    bind[3].length = &planned_amount_len;
+    bind[3].buffer_length = plannedAmountLen;
+    bind[3].length = &plannedAmountLen;
 
     bind[4].buffer_type = MYSQL_TYPE_STRING;
     bind[4].buffer = validityDeadline->value;
-    bind[4].buffer_length = validity_deadline_len;
-    bind[4].length = &validity_deadline_len;
+    bind[4].buffer_length = validityDeadLineLen;
+    bind[4].length = &validityDeadLineLen;
 
     bind[5].buffer_type = MYSQL_TYPE_STRING;
     bind[5].buffer = status->value;
-    bind[5].buffer_length = status_len;
-    bind[5].length = &status_len;
+    bind[5].buffer_length = statusLen;
+    bind[5].length = &statusLen;
 
     if (mysql_stmt_bind_param(stmt, bind) != 0) {
         database_debugPrintErr();

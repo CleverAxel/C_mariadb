@@ -45,15 +45,15 @@ void handleOperationSupplies() {
 
 void handleOperationSupplySelect() {
     char* query =
-        "SELECT "
-        "os.operation_id AS operation_id, "
-        "o.description AS op_description, "
-        "os.supply_id AS fourniture_id, "
-        "s.label AS fourniture_label, "
-        "os.quantity_used AS quantité_utilisée "
-        "FROM operations_supplies os "
-        "INNER JOIN operations o ON os.operation_id = o.id "
-        "INNER JOIN supplies s ON os.supply_id = s.id";
+    "SELECT "
+    "os.operation_id AS operation_id, "
+    "o.description AS op_description, "
+    "os.supply_id AS fourniture_id, "
+    "s.label AS fourniture_label, "
+    "os.quantity_used AS quantité_utilisée "
+    "FROM operations_supplies os "
+    "INNER JOIN operations o ON os.operation_id = o.id "
+    "INNER JOIN supplies s ON os.supply_id = s.id";
 
     database_displaySelect(query);
 }

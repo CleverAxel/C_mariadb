@@ -9,7 +9,7 @@ int displayWorksiteMenu() {
     printf("************************************\n");
     printf("***          Chantiers           ***\n");
     printf("************************************\n");
-    printf("1. Rechercher chantiers\n");
+    printf("1. Sélect chantiers\n");
     printf("2. Insérer chantier\n");
     printf("3. Mettre à jour le status\n");
     printf("0. Retour\n");
