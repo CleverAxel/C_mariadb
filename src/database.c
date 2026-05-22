@@ -203,9 +203,7 @@ void database_displaySelect(const char* query) {
 
     if (results == NULL) {
         database_debugPrintErr();
-
         database_closeConnexion();
-
         free(maxLengthColumns);
 
         string_free(nullChaineDb);
