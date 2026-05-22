@@ -108,3 +108,154 @@ void database_freeResult(MYSQL_RES* results) {
         results = NULL;
     }
 }
+
+void database_displaySelect(const char* query) {
+    helper_clearConsole();
+
+    String* fetchedColumn = NULL;
+    String* nullChaineDb = string_create(NULL_STRING_DB);
+
+    string_manageFailedMalloc(nullChaineDb);
+
+
+
+    MYSQL_RES* results = NULL;
+    MYSQL_ROW row;
+    MYSQL_FIELD* columnNames = NULL;
+
+    int* maxLengthColumns = NULL;
+    int columnCount = 0;
+    int totalMaxLength = 0;
+
+    if (mysql_query(database_getConnexion(), query)) {
+        database_debugPrintErr();
+        database_closeConnexion();
+        string_free(nullChaineDb);
+        exit(EXIT_FAILURE);
+    }
+
+    results = mysql_use_result(database_getConnexion());
+
+    if (results == NULL) {
+        database_debugPrintErr();
+        database_closeConnexion();
+        string_free(nullChaineDb);
+        exit(EXIT_FAILURE);
+    }
+
+    columnCount = mysql_num_fields(results);
+    columnNames = mysql_fetch_field(results);
+
+    maxLengthColumns = malloc(columnCount * sizeof(int));
+
+    if (maxLengthColumns == NULL) {
+        fprintf(stderr, "Erreur allocation mémoire\n");
+
+        database_closeConnexion();
+        database_freeResult(results);
+
+        string_free(nullChaineDb);
+
+        exit(EXIT_FAILURE);
+    }
+
+    for (int i = 0; i < columnCount; i++) {
+        string_free(fetchedColumn);
+
+        fetchedColumn = string_create(columnNames[i].name);
+
+        string_manageFailedMalloc(fetchedColumn);
+
+        maxLengthColumns[i] =
+        fetchedColumn->length > nullChaineDb->length ? fetchedColumn->length : nullChaineDb->length;
+    }
+
+    while ((row = mysql_fetch_row(results))) {
+        for (int i = 0; i < columnCount; i++) {
+            string_free(fetchedColumn);
+
+            fetchedColumn = string_create(row[i] ? row[i] : NULL_STRING_DB);
+
+            string_manageFailedMalloc(fetchedColumn);
+
+            if (fetchedColumn->length > maxLengthColumns[i]) {
+                maxLengthColumns[i] = fetchedColumn->length;
+            }
+        }
+    }
+
+    database_freeResult(results);
+
+    if (mysql_query(database_getConnexion(), query)) {
+        database_debugPrintErr();
+
+        database_closeConnexion();
+
+        free(maxLengthColumns);
+
+        string_free(nullChaineDb);
+        string_free(fetchedColumn);
+
+        exit(EXIT_FAILURE);
+    }
+
+    results = mysql_use_result(database_getConnexion());
+
+    if (results == NULL) {
+        database_debugPrintErr();
+
+        database_closeConnexion();
+
+        free(maxLengthColumns);
+
+        string_free(nullChaineDb);
+        string_free(fetchedColumn);
+
+        exit(EXIT_FAILURE);
+    }
+
+    columnNames = mysql_fetch_field(results);
+
+    for (int i = 0; i < columnCount; i++) {
+        totalMaxLength += maxLengthColumns[i] + 3;
+    }
+
+    helper_printNChar('-', totalMaxLength);
+    printf("\n");
+
+    printf("|");
+
+    for (int i = 0; i < columnCount; i++) {
+        printf(" %-*s |", maxLengthColumns[i], columnNames[i].name);
+    }
+
+    printf("\n");
+
+    helper_printNChar('-', totalMaxLength);
+    printf("\n");
+
+    while ((row = mysql_fetch_row(results))) {
+        printf("|");
+
+        for (int i = 0; i < columnCount; i++) {
+            string_free(fetchedColumn);
+
+            fetchedColumn = string_create(row[i] ? row[i] : NULL_STRING_DB);
+
+            string_manageFailedMalloc(fetchedColumn);
+
+            printf(" %-*s |", maxLengthColumns[i], fetchedColumn->value);
+        }
+
+        printf("\n");
+    }
+
+    database_freeResult(results);
+
+    free(maxLengthColumns);
+
+    string_free(nullChaineDb);
+    string_free(fetchedColumn);
+
+    helper_pauseConsole();
+}

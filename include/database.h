@@ -29,6 +29,7 @@ void database_displayCurrentUser();
 MYSQL* database_getConnexion();
 void database_closeConnexion();
 void database_freeResult(MYSQL_RES* results);
+void database_displaySelect(const char* query);
 
 
 #endif
